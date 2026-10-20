@@ -5,6 +5,7 @@ using namespace std;
 
 struct Item {
     int id;
+    int priority;
     double weight;
     double profit;
     double ratio;
@@ -15,6 +16,9 @@ struct Item {
 
 
 bool compare(Item a, Item b) {
+    if (a.priority != b.priority) {
+        return a.priority < b.priority;
+    }
     return a.ratio > b.ratio;
 }
 
@@ -46,6 +50,9 @@ int main() {
         cout << "  Profit: ";
         cin >> items[i].profit;
 
+        cout << "  Priority (higher number = higher priority): ";
+        cin >> items[i].priority;
+
         items[i].ratio =
             items[i].profit / items[i].weight;
 
@@ -56,7 +63,26 @@ int main() {
         cout << endl;
     }
 
-  
+    cout<<"Original Item List"<<endl;
+    cout << left
+         << setw(8) << "Item"
+         << setw(12) << "Weight"
+         << setw(12) << "Profit"
+         << setw(12) << "Priority"
+         << setw(12) << "P/W Ratio"
+         << '\n';
+
+    cout << string(56, '-') << '\n';
+    for (const Item &item : items) {
+        cout << left
+             << setw(8) << item.id
+             << setw(12) << item.weight
+             << setw(12) << item.profit
+             << setw(12) << item.priority
+             << setw(12) << item.ratio
+             << '\n';
+    }
+
     sort(items, items + n, compare);
 
    cout<<"Item sorted by Weight/Profit Ratio"<<endl;
@@ -65,6 +91,7 @@ int main() {
          << setw(8) << "Item"
          << setw(12) << "Weight"
          << setw(12) << "Profit"
+         << setw(12) << "Priority"
          << setw(15) << "P/W Ratio"
          << endl;
 
@@ -78,6 +105,8 @@ int main() {
              << items[i].weight
              << setw(12)
              << items[i].profit
+             << setw(15)
+             << items[i].priority
              << setw(15)
              << items[i].ratio
              << endl;
@@ -139,6 +168,7 @@ int main() {
          << setw(12) << "Fraction"
          << setw(15) << "Weight Taken"
          << setw(15) << "Profit Taken"
+         << setw(12) << "Priority"
          << endl;
 
     cout << "-----------------------------------------------------\n";
@@ -155,6 +185,8 @@ int main() {
                  << items[i].weightTaken
                  << setw(15)
                  << items[i].profitTaken
+                 << setw(12)
+                 << items[i].priority
                  << endl;
         }
     }
